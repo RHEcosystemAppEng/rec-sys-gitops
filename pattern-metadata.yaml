@@ -1,17 +1,17 @@
 # This goal of this metadata is mainly used as a source of truth for
 # documentation and qe.
 metadata_version: "1.0"
-name: rag-llm-gitops
+name: rec-sys-gitops
 pattern_version: "1.0"
 display_name: AI Generation with LLM and RAG
-repo_url: https://github.com/validatedpatterns/rag-llm-gitops
+repo_url: https://github.com/validatedpatterns/rec-sys-gitops # TODO
 docs_repo_url: https://github.com/validatedpatterns/docs
-issues_url: https://github.com/validatedpatterns/rag-llm-gitops/issues
-docs_url: https://validatedpatterns.io/patterns/rag-llm-gitops/
+issues_url: https://github.com/validatedpatterns/rec-sys-gitops/issues
+docs_url: https://validatedpatterns.io/patterns/rec-sys-gitops/
 ci_url: https://validatedpatterns.io/ci/?pattern=ragllm
 # can be sandbox, tested or maintained
-tier: tested
-owners: day0hero, sauagarwa
+tier: sandbox
+owners: ikatav, day0hero, sauagarwa
 requirements:
   hub: # Main cluster
     compute:

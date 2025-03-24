@@ -1,5 +1,5 @@
 # This is only needed for RHPDS
-- name: RAG-LLM-GitOps RHPDS bootstrap
+- name: REC-SYS-GitOps RHPDS bootstrap
   hosts: localhost
   connection: local
   tasks:

@@ -1,6 +1,6 @@
 ---
 global:
-  pattern: rag-llm-gitops
+  pattern: rec-sys-gitops
   options:
     useCSV: false
     syncPolicy: Automatic

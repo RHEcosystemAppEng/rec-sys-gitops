@@ -10,7 +10,7 @@ clusterGroup:
     - redhat-ods-operator:
         operatorGroup: true
         targetNamespaces: []
-    - rag-llm:
+    - rec-sys:
         labels:
           opendatahub.io/dashboard: "true"
           modelmesh-enabled: 'false'
@@ -51,7 +51,7 @@ clusterGroup:
       sourceNamespace: openshift-marketplace
   projects:
     - hub
-    - rag-llm
+    - rec-sys
     - llm-monitoring
     - gpu-config
     - openshift-ai
@@ -82,30 +82,29 @@ clusterGroup:
       namespace: vault
       project: hub
       path: common/hashicorp-vault
+
     golang-external-secrets:
       name: golang-external-secrets
       namespace: golang-external-secrets
       project: hub
       path: common/golang-external-secrets
+
     minio:
       name: minio
-      namespace: rag-llm
+      namespace: rec-sys
       project: hub
       path: charts/all/minio
+
     llm-serving-service:
       name: llm-serving-service
-      namespace: rag-llm
+      namespace: rec-sys
       project: hub
       path: charts/all/llm-serving-service
       syncPolicy:
         automated: {}
         retry:
           limit: 50
-    rag-llm:
-      name: rag-llm
-      namespace: rag-llm
-      project: rag-llm
-      path: charts/all/rag-llm
+
     llm-monitoring:
       name: llm-monitoring
       namespace: llm-monitoring
@@ -124,12 +123,6 @@ clusterGroup:
       namespace: nvidia-network-operator
       project: gpu-config
       path: charts/all/nvidia-gpu-config
-
-    llm-ui-config:
-      name: rag-llm-ui-config
-      namespace: rag-llm
-      project: gpu-config
-      path: charts/all/rag-llm-ui-config
 
     llm-monitoring-config:
       name: grafana-ui-config

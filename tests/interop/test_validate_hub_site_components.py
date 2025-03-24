@@ -132,7 +132,7 @@ def test_validate_nodefeaturediscovery():
 
 @pytest.mark.validate_gpu_clusterpolicy
 def test_validate_gpu_clusterpolicy():
-    name = "rag-llm-gpu-cluster-policy"
+    name = "rec-sys-gpu-cluster-policy"
     tolerations = '"tolerations":[{"effect":"NoSchedule","key":"odh-notebook","value":"true"}]'
     logger.info("Check for GPU clusterpolicy")
 

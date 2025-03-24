@@ -1,7 +1,7 @@
 apiVersion: nvidia.com/v1
 kind: ClusterPolicy
 metadata:
-  name: rag-llm-gpu-cluster-policy
+  name: rec-sys-gpu-cluster-policy
   namespace: nvidia-gpu-operator
 spec:
   vgpuDeviceManager:
