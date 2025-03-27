@@ -77,6 +77,18 @@ clusterGroup:
   #   - '/overrides/values-{{ $.Values.global.hubClusterDomain }}.yaml'
   #   - '/overrides/values-{{ $.Values.global.localClusterDomain }}.yaml'
   applications:
+    feast:
+      name: feast
+      namespace: rec-sys
+      project: hub
+      path: charts/all/feast
+
+    rec-sys:
+      name: rec-sys
+      namespace: rec-sys
+      project: rec-sys
+      path: charts/all/rec-sys
+
     vault:
       name: vault
       namespace: vault
