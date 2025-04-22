@@ -1,12 +1,12 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: xray-images
-  namespace: {{ .Values.global.recsys.namespace }}
+  name: interactions
+  namespace: 'jary-feast-example'
   labels:
     strimzi.io/cluster: {{ .Values.kafka.cluster.name }}
 spec:
-  partitions: 1
+  partitions: 3
   replicas: 1
   config:
     retention.ms: 604800000
