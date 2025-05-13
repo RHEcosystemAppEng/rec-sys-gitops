@@ -1,0 +1,48 @@
+apiVersion: datasciencepipelinesapplications.opendatahub.io/v1
+kind: DataSciencePipelinesApplication
+metadata:
+  name: dspa
+  namespace: {{ .Values.recSys.namespace }}
+spec:
+  apiServer:
+    artifactSignedURLExpirySeconds: 60
+    caBundleFileMountPath: ''
+    caBundleFileName: ''
+    deploy: true
+    enableOauth: true
+    enableSamplePipeline: false
+    managedPipelines:
+      instructLab:
+        state: Removed
+  database:
+    disableHealthCheck: false
+    mariaDB:
+      deploy: true
+      pipelineDBName: mlpipeline
+      pvcSize: 10Gi
+      username: mlpipeline
+  dspVersion: v2
+  objectStorage:
+    minio:  # mutually exclusive with externalStorage
+      deploy: true
+      image: 'quay.io/minio/minio:latest'
+    # disableHealthCheck: false
+    # enableExternalRoute: false
+    # externalStorage:
+    #   basePath: ''
+    #   bucket: data-science-pipeline
+    #   host: minio-api-jary-feast-example.apps.feast-1.lue0.p1.openshiftapps.com
+    #   port: ''
+    #   region: us-east-1
+    #   s3CredentialsSecret:
+    #     accessKey: AWS_ACCESS_KEY_ID
+    #     secretKey: AWS_SECRET_ACCESS_KEY
+    #     secretName: dashboard-dspa-secret
+    #   scheme: https
+  persistenceAgent:
+    deploy: true
+    numWorkers: 2
+  podToPodTLS: true
+  scheduledWorkflow:
+    cronScheduleTimezone: UTC
+    deploy: true

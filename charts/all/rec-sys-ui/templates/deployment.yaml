@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rec-sys-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rec-sys-ui
+  template:
+    metadata:
+      labels:
+        app: rec-sys-ui
+    spec:
+      containers:
+      - name: rec-sys-ui
+        image: quay.io/ecosystem-appeng/rec-sys-ui:0.0.1
+        ports:
+        - containerPort: 8080

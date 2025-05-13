@@ -1,0 +1,8 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: rec-sys-ui-route
+spec:
+  to:
+    kind: Service
+    name: rec-sys-ui-service

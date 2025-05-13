@@ -2,4 +2,4 @@ global:
   localClusterDomain: example.com
   hubClusterDomain: example.com
 llmui:
-  namespace: "rag-llm"
+  namespace: "rec-sys"

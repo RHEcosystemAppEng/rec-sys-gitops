@@ -1,8 +1,7 @@
-{{- if eq .Values.global.db.type "EDB" }}
 apiVersion: postgresql.k8s.enterprisedb.io/v1
 kind: Cluster
 metadata:
-  name: vectordb
+  name: cluster-sample
 spec:
   logLevel: info
   startDelay: 3600
@@ -87,4 +86,3 @@ spec:
   {{- end }}
   primaryUpdateStrategy: unsupervised
   instances: {{ .Values.replicaCount }}
-{{- end }}

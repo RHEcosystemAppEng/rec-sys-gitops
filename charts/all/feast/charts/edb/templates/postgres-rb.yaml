@@ -1,4 +1,3 @@
-{{- if eq .Values.global.db.type "EDB" }}
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -6,9 +5,8 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: postgres-service-account
-    namespace: {{ .Values.Namespace }}
+    namespace: {{ .Values.namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: postgres-service-role
-{{- end }}

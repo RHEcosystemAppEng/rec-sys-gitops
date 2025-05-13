@@ -1,9 +1,9 @@
+---
 apiVersion: datasciencecluster.opendatahub.io/v1
 kind: DataScienceCluster
 metadata:
-  name: default-dsc
-  annotations:
-    argocd.argoproj.io/sync-wave: "20"
+  name: odh-deployment
+  namespace: odh
 spec:
   components:
     dashboard:
@@ -13,10 +13,7 @@ spec:
     datasciencepipelines:
       managementState: Managed
     feastoperator:
-      managementState: Managed
-    modelregistry:
-      managementState: Managed
-      registriesNamespace: rhoai-model-registries
+      managementState: Managed      
     kueue:
       managementState: Removed
     codeflare:
@@ -33,3 +30,12 @@ spec:
             type: SelfSigned
         managementState: Managed
         name: knative-serving
+#  components:
+#    codeflare:
+#      managementState: Managed
+#    dashboard:
+#      managementState: Managed
+#    ray:
+#      managementState: Managed
+#    workbenches:
+#      managementState: Managed

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: feast-data-stores
-  namespace: rag-llm
+  namespace: rec-sys
 stringData:
   sql: |
     path: postgresql+psycopg://${user}:${password}@${host}:${port}/${dbname}
@@ -30,8 +30,9 @@ spec:
   feastProject: feast_edb_rec_sys
   feastProjectDir:
     git:
-      url: https://github.com/RHEcosystemAppEng/feast-edb-demo
+      url: https://github.com/RHEcosystemAppEng/rec-sys-app
       ref: main
+      init: true  
   services:
     offlineStore:
       persistence:
@@ -43,7 +44,7 @@ spec:
             value: /tmp
         envFrom:
           - secretRef:
-              name: vectordb-app
+              name: cluster-sample-app
     onlineStore:
       persistence:
         store:
@@ -53,7 +54,7 @@ spec:
       server:
         envFrom:
         - secretRef:
-            name: vectordb-app
+            name: cluster-sample-app
         env:
         - name: MPLCONFIGDIR
           value: /tmp
@@ -74,8 +75,8 @@ spec:
               value: /tmp
           envFrom:
             - secretRef:
-                name: vectordb-app
+                name: cluster-sample-app
     ui:
       envFrom:
         - secretRef:
-            name: vectordb-app
+            name: cluster-sample-app

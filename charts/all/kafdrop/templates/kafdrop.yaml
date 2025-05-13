@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.kafka.app }}
-  namespace: {{ .Values.global.xraylab.namespace }}
+  namespace: {{ .Values.global.recsys.namespace }}
 spec:
   selector:
     matchLabels:

@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kfp-run-job
+spec:
+  backoffLimit: 5
+  template:
+    spec:
+      serviceAccountName: pipeline-runner-dspa    
+      containers:
+      - name: kfp-runner
+        image: quay.io/ikatav/ml-pipeline-importer:0.0.1
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: PIPELINE_YAML_RAW_URL
+            value: 'https://raw.githubusercontent.com/RHEcosystemAppEng/rec-sys-workflow/refs/heads/main/train-workflow.yaml'
+          - name: PIPELINE_NAME
+            value: 'batch_training'
+          - name: EXPERIMENT_NAME
+            value: 'Default'
+          - name: RUN_NAME
+            value: '1'
+        command: ['/bin/sh']
+        args: ['-c', './entrypoint.sh']
+      restartPolicy: Never

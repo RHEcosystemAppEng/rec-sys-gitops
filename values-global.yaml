@@ -12,6 +12,8 @@ global:
 # Add for model ID
   model:
       modelId: ibm-granite/granite-3.1-8b-instruct
+  recsys:
+    namespace: rec-sys
 main:
   clusterGroupName: hub
   multiSourceConfig:

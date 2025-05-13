@@ -43,12 +43,19 @@ clusterGroup:
       name: servicemeshoperator
       namespace: openshift-operators
       channel: stable
-    rhoai:
-      name: rhods-operator
-      namespace: redhat-ods-operator
-      channel: stable-2.16
-      source: redhat-operators
-      sourceNamespace: openshift-marketplace
+    odh:
+      name: opendatahub-operator
+      namespace: openshift-operators
+      channel: fast
+      source: community-operators
+    kafka:
+      name: strimzi-kafka-operator
+      namespace: openshift-operators
+      channel: stable
+      source: community-operators
+      # installPlanApproval: Automatic
+      # sourceNamespace: openshift-marketplace
+      # startingCSV: strimzi-cluster-operator.v0.45.0
   projects:
     - hub
     - rec-sys
@@ -142,11 +149,35 @@ clusterGroup:
       project: gpu-config
       path: charts/all/llm-monitoring-config
 
-    openshift-ai:
-      name: openshift-ai
-      namespace: redhat-ods-operator
+    ui-config:
+      name: rec-sys-ui-config
+      namespace: rec-sys
+      project: rec-sys
+      path: charts/all/rec-sys-ui-config
+
+    kafka:
+      name: kafka
+      namespace: rec-sys
+      project: rec-sys
+      path: charts/all/kafka
+
+    kafka-ui:
+      name: kafka-ui
+      namespace: rec-sys
+      project: rec-sys
+      path: charts/all/kafdrop
+
+    odh:
+      name: odh
+      namespace: opendatahub
       project: openshift-ai
-      path: charts/all/rhods
+      path: charts/all/odh
+    # openshift-ai:
+     #   name: openshift-ai
+     #   namespace: opendatahub
+     #   project: openshift-ai
+     #   path: charts/all/rhods
+ 
 
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
