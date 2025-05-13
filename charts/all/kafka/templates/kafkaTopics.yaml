@@ -1,8 +1,22 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: interactions
-  namespace: 'jary-feast-example'
+  name: positive-interactions
+  namespace: {{ .Values.kafka.namespace }}
+  labels:
+    strimzi.io/cluster: {{ .Values.kafka.cluster.name }}
+spec:
+  partitions: 3
+  replicas: 1
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: negetive-interactions
+  namespace: {{ .Values.kafka.namespace }}
   labels:
     strimzi.io/cluster: {{ .Values.kafka.cluster.name }}
 spec:
