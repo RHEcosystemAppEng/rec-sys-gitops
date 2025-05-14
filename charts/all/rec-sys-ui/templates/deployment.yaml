@@ -18,3 +18,21 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cluster-sample-app
+              key: password
+        volumeMounts:
+        - name: tls-secret
+          mountPath: /app/tls.crt
+          subPath: tls.crt
+          readOnly: true
+      volumes:
+      - name: tls-secret
+        secret:
+          secretName: feast-feast-edb-rec-sys-registry-tls
+          items:
+          - key: tls.crt
+            path: tls.crt

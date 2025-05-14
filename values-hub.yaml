@@ -51,9 +51,12 @@ clusterGroup:
     rhoai:
       name: rhods-operator
       namespace: redhat-ods-operator
-      channel: stable-2.16
+      channel: fast
       source: redhat-operators
       sourceNamespace: openshift-marketplace
+      startingCSV: rhods-operator.2.20.0
+      # installPlanApproval: Automatic
+      # channel: stable-2.16
     kafka:
       name: strimzi-kafka-operator
       namespace: openshift-operators
