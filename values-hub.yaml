@@ -87,7 +87,7 @@ clusterGroup:
     feast:
       name: feast
       namespace: rec-sys
-      project: hub
+      project: rec-sys
       path: charts/all/feast
 
     rec-sys:
@@ -178,11 +178,12 @@ clusterGroup:
       namespace: opendatahub
       project: openshift-ai
       path: charts/all/odh
+
     # openshift-ai:
-     #   name: openshift-ai
-     #   namespace: opendatahub
-     #   project: openshift-ai
-     #   path: charts/all/rhods
+    #   name: openshift-ai
+    #   namespace: opendatahub
+    #   project: openshift-ai
+    #   path: charts/all/rhods
  
 
   imperative:
