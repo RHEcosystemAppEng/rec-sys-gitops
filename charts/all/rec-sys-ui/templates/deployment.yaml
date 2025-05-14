@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
       - name: rec-sys-ui
-        image: quay.io/ecosystem-appeng/rec-sys-ui:0.0.1
+        image: quay.io/ecosystem-appeng/rec-sys-ui:0.0.3
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
