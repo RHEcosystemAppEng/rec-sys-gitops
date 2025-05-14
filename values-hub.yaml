@@ -108,11 +108,11 @@ clusterGroup:
       project: hub
       path: common/golang-external-secrets
 
-    minio:
-      name: minio
-      namespace: rec-sys
-      project: hub
-      path: charts/all/minio
+    # minio:
+    #   name: minio
+    #   namespace: rec-sys
+    #   project: hub
+    #   path: charts/all/minio
 
     llm-serving-service:
       name: llm-serving-service
@@ -154,6 +154,12 @@ clusterGroup:
       namespace: rec-sys
       project: rec-sys
       path: charts/all/rec-sys-ui-config
+
+    ui:
+      name: rec-sys-ui
+      namespace: rec-sys
+      project: rec-sys
+      path: charts/all/rec-sys-ui
 
     kafka:
       name: kafka
