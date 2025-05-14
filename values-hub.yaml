@@ -43,11 +43,17 @@ clusterGroup:
       name: servicemeshoperator
       namespace: openshift-operators
       channel: stable
-    odh:
-      name: opendatahub-operator
-      namespace: openshift-operators
-      channel: fast
-      source: community-operators
+    # odh:
+    #   name: opendatahub-operator
+    #   namespace: openshift-operators
+    #   channel: fast
+    #   source: community-operators
+    rhoai:
+      name: rhods-operator
+      namespace: redhat-ods-operator
+      channel: stable-2.16
+      source: redhat-operators
+      sourceNamespace: openshift-marketplace
     kafka:
       name: strimzi-kafka-operator
       namespace: openshift-operators
@@ -173,17 +179,18 @@ clusterGroup:
       project: rec-sys
       path: charts/all/kafdrop
 
-    odh:
-      name: odh
-      namespace: opendatahub
-      project: openshift-ai
-      path: charts/all/odh
-
-    # openshift-ai:
-    #   name: openshift-ai
+    # odh:
+    #   name: odh
     #   namespace: opendatahub
     #   project: openshift-ai
-    #   path: charts/all/rhods
+    #   path: charts/all/odh
+
+    openshift-ai:
+      name: openshift-ai
+      namespace: redhat-ods-operator
+      project: openshift-ai
+      path: charts/all/rhods
+
  
 
   imperative:
