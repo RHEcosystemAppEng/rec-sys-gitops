@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: secret-reader-role
+  namespace: {{ .Values.kafka.namespace }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["cluster-sample-app"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kafka-connect-read-secrets
+  namespace: {{ .Values.kafka.namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: connect-cluster-connect
+    namespace: {{ .Values.kafka.namespace }}
+roleRef:
+  kind: Role
+  name: secret-reader-role
+  apiGroup: rbac.authorization.k8s.io
