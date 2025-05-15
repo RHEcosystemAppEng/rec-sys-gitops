@@ -26,6 +26,7 @@ apiVersion: feast.dev/v1alpha1
 kind: FeatureStore
 metadata:
   name: feast-edb-rec-sys
+  namespace: rec-sys
 spec:
   feastProject: feast_edb_rec_sys
   feastProjectDir:
@@ -33,17 +34,17 @@ spec:
       url: https://github.com/RHEcosystemAppEng/rec-sys-app
       ref: main
   services:
-    # offlineStore:
-    #   persistence:
-    #     file:
-    #       type: duckdb
-    #   server:
-    #     env:
-    #       - name: MPLCONFIGDIR
-    #         value: /tmp
-    #     envFrom:
-    #       - secretRef:
-    #           name: cluster-sample-app
+    offlineStore:
+      persistence:
+        file:
+          type: duckdb
+      server:
+        env:
+          - name: MPLCONFIGDIR
+            value: /tmp
+        envFrom:
+          - secretRef:
+              name: cluster-sample-app
     onlineStore:
       persistence:
         store:
