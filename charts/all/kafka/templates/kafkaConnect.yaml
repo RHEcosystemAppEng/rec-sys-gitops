@@ -6,7 +6,7 @@ metadata:
   name: connect-cluster
   namespace: {{ .Values.kafka.namespace }}
 spec:
-  bootstrapServers: '{{ .Values.kafka.cluster.name }}-kafka-bootstrap.kafka.svc.cluster.local:9093'
+  bootstrapServers: '{{ .Values.kafka.cluster.name }}-kafka-bootstrap.{{ .Values.kafka.namespace }}.svc.cluster.local:9093'
   build:
     output:
       image: 'image-registry.openshift-image-registry.svc:5000/rec-sys/connect-cluster:latest'

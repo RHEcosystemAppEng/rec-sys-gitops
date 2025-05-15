@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: feast-apply-job
+  namespace: rec-sys
+  labels:
+    feast.dev/name: feast-edb-rec-sys
+    feast.dev/service-type: job
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: feast-0
+          image: quay.io/openshift/origin-cli:4.17
+          command:
+            - kubectl
+            - exec
+            - deploy/feast-feast-edb-rec-sys
+            - -i
+            - --
+            - bash
+            - -c
+            - feast apply
+          imagePullPolicy: IfNotPresent
+      serviceAccountName: feast-feast-edb-rec-sys
+  backoffLimit: 4

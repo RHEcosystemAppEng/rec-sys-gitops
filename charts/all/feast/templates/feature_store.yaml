@@ -32,19 +32,18 @@ spec:
     git:
       url: https://github.com/RHEcosystemAppEng/rec-sys-app
       ref: main
-      init: true  
   services:
-    offlineStore:
-      persistence:
-        file:
-          type: duckdb
-      server:
-        env:
-          - name: MPLCONFIGDIR
-            value: /tmp
-        envFrom:
-          - secretRef:
-              name: cluster-sample-app
+    # offlineStore:
+    #   persistence:
+    #     file:
+    #       type: duckdb
+    #   server:
+    #     env:
+    #       - name: MPLCONFIGDIR
+    #         value: /tmp
+    #     envFrom:
+    #       - secretRef:
+    #           name: cluster-sample-app
     onlineStore:
       persistence:
         store:

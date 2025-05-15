@@ -5,8 +5,3 @@ kafka:
   replicas: 3
   storage:
     type: ephemeral
-
-zookeeper:
-  replicas: 3
-  storage:
-    type: ephemeral
