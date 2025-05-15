@@ -176,11 +176,11 @@ clusterGroup:
       project: rec-sys
       path: charts/all/kafka
 
-    kafka-ui:
-      name: kafka-ui
-      namespace: rec-sys
-      project: rec-sys
-      path: charts/all/kafdrop
+    # kafka-ui:
+    #   name: kafka-ui
+    #   namespace: rec-sys
+    #   project: rec-sys
+    #   path: charts/all/kafdrop
 
     # odh:
     #   name: odh
