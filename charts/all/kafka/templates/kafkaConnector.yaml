@@ -11,29 +11,17 @@ spec:
     value.converter: org.apache.kafka.connect.json.JsonConverter
     topics: negetive-interactions
     value.converter.schemas.enable: true
-    connection.password:
-      valueFrom:
-        secretKeyRef:
-          name: cluster-sample-app
-          key: password
+    connection.password: "${secrets:rec-sys/cluster-sample-app:password}"
     key.converter: org.apache.kafka.connect.storage.StringConverter
     batch.size: 3
     pk.mode: none
     insert.mode: insert
     table.name.format: stream_negative_interaction
-    connection.user:
-      valueFrom:
-        secretKeyRef:
-          name: cluster-sample-app
-          key: user
+    connection.user: "${secrets:rec-sys/cluster-sample-app:user}"
     auto.create: true
     auto.evolve: true
     key.converter.schemas.enable: false
-    connection.url:
-      valueFrom:
-        secretKeyRef:
-          name: cluster-sample-app
-          key: jdbc-uri
+    connection.url: "${secrets:rec-sys/cluster-sample-app:jdbc-uri}"
     transforms: "TimestampConverter"
     transforms.TimestampConverter.type: "org.apache.kafka.connect.transforms.TimestampConverter$Value"
     transforms.TimestampConverter.format: "YYYY-MM-DD hh:mm:ss.s"

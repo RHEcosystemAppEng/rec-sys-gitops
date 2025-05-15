@@ -17,6 +17,8 @@ spec:
             url: 'https://github.com/Aiven-Open/jdbc-connector-for-apache-kafka/releases/download/v6.10.0/jdbc-connector-for-apache-kafka-6.10.0.zip'
         name: jdbc
   config:
+    config.providers: secrets
+    config.providers.secrets.class: io.strimzi.kafka.KubernetesSecretConfigProvider
     config.storage.replication.factor: -1
     config.storage.topic: connect-cluster-configs
     group.id: connect-cluster
