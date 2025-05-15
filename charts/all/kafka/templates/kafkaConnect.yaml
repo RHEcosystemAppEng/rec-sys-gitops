@@ -9,8 +9,7 @@ spec:
   bootstrapServers: '{{ .Values.kafka.cluster.name }}-kafka-bootstrap.kafka.svc.cluster.local:9093'
   build:
     output:
-      image: 'quay.io/jary/my-connect:latest'
-      pushSecret: jary-myconnectbot-pull-secret
+      image: 'image-registry.openshift-image-registry.svc:5000/rec-sys/connect-cluster:latest'
       type: docker
     plugins:
       - artifacts:
