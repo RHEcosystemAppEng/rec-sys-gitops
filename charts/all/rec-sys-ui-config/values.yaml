@@ -1,5 +1,5 @@
 global:
   localClusterDomain: example.com
   hubClusterDomain: example.com
-llmui:
+recSys:
   namespace: "rec-sys"

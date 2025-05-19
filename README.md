@@ -1,96 +1,83 @@
-# Document Generation Demo with LLM and RAG
-
+# Retail Recommendation System Demo
 ## Introduction
+This deployment is based on the validated pattern framework, utilizing GitOps for seamless provisioning of all operators and applications. It deploys a Retail Recommendation System that leverages machine learning models to provide personalized item suggestions to customers, enhancing store sales by considering their preferences and demographics.
 
-This deployment is based on the `validated pattern framework`, using GitOps for
-seamless provisioning of all operators and applications. It deploys a Chatbot
-application that harnesses the power of Large Language Models (LLMs) combined
-with the Retrieval-Augmented Generation (RAG) framework.
-
-The pattern uses the [Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) to deploy and serve LLM models at scale.
-
-The application uses either the [EDB Postgres for Kubernetes operator](https://catalog.redhat.com/software/container-stacks/detail/5fb41c88abd2a6f7dbe1b37b)
-(default) or Redis to store embeddings of Red Hat products, running on Red Hat
-OpenShift to generate project proposals for specific Red Hat products.
-
+The pattern harnesses Red Hat OpenShift AI to deploy and serve recommendation at scale. It integrates the Feast Feature Store for feature management, EDB Postgres to store user and item embeddings, and a simple user interface (UI) to facilitate customer interactions with the system. Running on Red Hat OpenShift, this demo showcases a scalable, enterprise-ready solution for retail recommendations.
 ## Pre-requisites
 
 - Podman
 - Red Hat Openshift cluster running in AWS. Supported regions are : us-east-1 us-east-2 us-west-1 us-west-2 ca-central-1 sa-east-1 eu-west-1 eu-west-2 eu-west-3 eu-central-1 eu-north-1 ap-northeast-1 ap-northeast-2 ap-northeast-3 ap-southeast-1 ap-southeast-2 ap-south-1.
 - GPU Node to run Hugging Face Text Generation Inference server on Red Hat OpenShift cluster.
-- Create a fork of the [rag-llm-gitops](https://github.com/validatedpatterns/rag-llm-gitops.git) git repository.
+- Create a fork of the <TODO add link for the repo after moving it to VP project> git repository.
 
 ## Demo Description & Architecture
-
-The goal of this demo is to demonstrate a Chatbot LLM application augmented with data from Red Hat product documentation
-running on [Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai). It deploys an LLM application that connects to multiple LLM providers such as OpenAI, Hugging Face, and NVIDIA NIM.
-The application generates a project proposal for a Red Hat product.
-
 ### Key Features
+* Red Hat OpenShift AI: Deploys and serves recommendation at scale.
+* Two-Tower Architecture: Utilizes separate neural networks to generate user and item embeddings for personalized recommendations.
+* Feast Feature Store: Manages and serves features for training and real-time inference.
+* EDB Postgres with PGVector: Stores user and item embeddings, enabling fast similarity searches.
+* Simple UI: Allows users to browse recommendations, add items to cart, purchase, or rate products.
+* Kafka Integration: Records user interactions for continuous learning and dataset updates.
+* Monitoring Dashboard: Provides performance metrics using Prometheus and Grafana.
+* GitOps Deployment: Ensures an end-to-end, reproducible setup of the demo.
 
-- Leveraging [Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) to deploy and serve LLM models powered by NVIDIA GPU accelerator.
-- LLM Application augmented with content from Red Hat product documentation.
-- Multiple LLM providers (OpenAI, Hugging Face, NVIDIA).
-- Vector Database, such as EDB Postgres for Kubernetes or Redis, to store embeddings of Red Hat product documentation.
-- Monitoring dashboard to provide key metrics such as ratings.
-- GitOps setup to deploy e2e demo (frontend / vector database / served models).
+### Workflow
+[Diagram Placeholder: Schematic diagram for workflow of Retail Recommendation System]
 
-![Overview](https://gitlab.com/osspa/portfolio-architecture-examples/-/raw/main/images/intro-marketectures/rag-demo-vp-marketing-slide.png)
+The workflow consists of the following steps:
 
-_Figure 1. Overview of the validated pattern for RAG Demo with Red Hat OpenShift_
+1. Data Ingestion
+* Data originates from parquet files containing users, items, and interactions.
+* Sample datasets are generated and embedded into parquet format.
+* Feast scans feature definitions, validates them, and syncs metadata to its registry.
+2. Feature Definition with Feast
+* Defines data sources, features, views, and services.
+* Initializes EDB PGVector as the offline store for historical data.
+3. Training
+* Retrieves historical features from the offline store using get_historical_features.
+* Trains a Two-Tower model:
+  * User Tower: Encodes user specifics (e.g., interaction history, demographics).
+  * Item Tower: Encodes item specifics (e.g., metadata).
+* Outputs fixed-length embeddings in a shared vector space.
+4. Batch Scoring
+* Generates embeddings for all users and items using trained encoders.
+* Attaches timestamps and pushes embeddings to the online store (EDB PGVector).
+5. Materialization
+* Computes the latest feature values and precomputes top-k recommendations for each user.
+* Stores results in the online store for fast retrieval.
+6. Serving
+* Existing Users: Fetches precomputed top items from the online store.
+* New Users: Embeds the user in real-time using the user tower model, performs a similarity search against item embeddings in PGVector, and retrieves top-k items.
+* User interactions are logged via Kafka.
+Data Ingestion
+[Diagram Placeholder: Schematic diagram for ingestion of data into Feast]
 
+Raw data (users, items, interactions) from parquet files is ingested into Feast, stored as feature views in the offline store (EDB PGVector).
 
-![Logical](https://gitlab.com/osspa/portfolio-architecture-examples/-/raw/main/images/logical-diagrams/rag-demo-vp-ld.png)
+Training and Batch Scoring
+[Diagram Placeholder: Schematic diagram for training and batch scoring]
 
-_Figure 2. Logical diagram of the RAG Demo with Red Hat OpenShift._
+The Two-Tower model is trained on historical data, and embeddings are generated and stored in PGVector for later use.
 
+Serving Recommendations
+[Diagram Placeholder: Schematic diagram for serving recommendations]
 
-#### RAG Demo Workflow
+For existing users, precomputed recommendations are fetched; for new users, embeddings are computed on-the-fly, followed by a similarity search.
 
-![Overview of workflow](https://gitlab.com/osspa/portfolio-architecture-examples/-/raw/main/images/schematic-diagrams/rag-demo-vp-sd.png)
+Download Diagrams
+View and download all diagrams in our open-source tooling site:
 
-_Figure 3. Schematic diagram for workflow of RAG demo with Red Hat OpenShift._
+Open Diagrams
 
-
-#### RAG Data Ingestion
-
-![ingestion](https://gitlab.com/osspa/portfolio-architecture-examples/-/raw/main/images/schematic-diagrams/rag-demo-vp-ingress-sd.png)
-
-_Figure 4. Schematic diagram for Ingestion of data for RAG._
-
-
-#### RAG Augmented Query
-
-
-![query](https://gitlab.com/osspa/portfolio-architecture-examples/-/raw/main/images/schematic-diagrams/rag-demo-vp-query-sd.png)
-
-_Figure 5. Schematic diagram for RAG demo augmented query._
-
-
-In Figure 5, we can see RAG augmented query. [IBM Granite 3.1-8B-Instruct](https://huggingface.co/ibm-granite/granite-3.1-8b-instruct) model is used for language processing, LangChain to
-integrate different tools of the LLM-based application together and to process the PDF
-files and web pages, vector database provider such as EDB Postgres for Kubernetes or Redis, is used to store vectors, and [Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) to serve the [IBM Granite 3.1-8B-Instruct](https://huggingface.co/ibm-granite/granite-3.1-8b-instruct) model, Gradio is used for user interface and object storage to store language model and other datasets.
-Solution components are deployed as microservices in the Red Hat OpenShift cluster.
-
-
-#### Download diagrams
-View and download all of the diagrams above in our open source tooling site.
-
-[Open Diagrams](https://www.redhat.com/architect/portfolio/tool/index.html?#gitlab.com/osspa/portfolio-architecture-examples/-/raw/main/diagrams/rag-demo-vp.drawio)
-
-
-![Diagram](images/diagram.png)
-_Figure 6. Proposed demo architecture with OpenShift AI_
-
-### Components deployed
-
-- **vLLM Text Generation Inference Server:** The pattern deploys a vLLM Inference Server. The server deploys and serves `ibm-granite/granite-3.1-8b-instruct` model. The server will require a GPU node.
-- **EDB Postgres for Kubernetes / Redis Server:** A Vector Database server is deployed to store vector embeddings created from Red Hat product documentation.
-- **Populate VectorDb Job:** The job creates the embeddings and populates the vector database.
-- **LLM Application:** This is a Chatbot application that can generate a project proposal by augmenting the LLM with the Red Hat product documentation stored in vector db.
-- **Prometheus:** Deploys a prometheus instance to store the various metrics from the LLM application and TGIS server.
-- **Grafana:** Deploys Grafana application to visualize the metrics.
-
+Components Deployed
+Model Servers for User and Item Towers: Deployed via OpenShift AI to serve the Two-Tower models for real-time embedding generation.
+Feast Feature Store: Manages feature definitions and serves data for training and inference, using EDB PGVector as the offline store.
+EDB Postgres with PGVector: Acts as both offline (historical data) and online (real-time embeddings) stores.
+Embedding Generation Job: A batch job that generates and populates embeddings into the vector database.
+Recommendation UI: A simple web application for users to interact with recommendations.
+Kafka: Logs user interactions to enable continuous dataset updates.
+Prometheus: Collects metrics from the application and model servers.
+Grafana: Visualizes system performance and recommendation metrics.
 ## Deploying the demo
 
 To run the demo, ensure the Podman is running on your machine.Fork the [rag-llm-gitops](https://github.com/validatedpatterns/rag-llm-gitops) repo into your organization

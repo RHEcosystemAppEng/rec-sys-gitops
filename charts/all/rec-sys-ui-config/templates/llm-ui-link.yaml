@@ -2,12 +2,12 @@
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
-  name: llm-ui-gitops-link
-  namespace: {{ .Values.llmui.namespace }}
+  name: rec-sys-link
+  namespace: {{ .Values.recSys.namespace }}
 spec:
   applicationMenu:
     section: Demo Recommendation System
     # imageURL: 
-  href: 'https://llm-ui-{{ .Values.llmui.namespace }}.{{ coalesce .Values.global.localClusterDomain .Values.global.hubClusterDomain }}'
+  href: 'https://rec-sys-ui-route-{{ .Values.recSys.namespace }}.{{ coalesce .Values.global.localClusterDomain .Values.global.hubClusterDomain }}'
   location: ApplicationMenu
   text: 'Recommendation System UI'

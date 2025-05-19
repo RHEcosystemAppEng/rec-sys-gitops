@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: feast-apply-job
+  namespace: rec-sys
+  labels:
+    feast.dev/name: feast-edb-rec-sys
+    feast.dev/service-type: job
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: feast-0
+          image: quay.io/ecosystem-appeng/rec-sys-app:0.0.22
+          command:
+            - /bin/bash
+            - -c
+            - ./entry_point.sh && cd feature_repo && feast apply
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: cluster-sample-app
+                key: password
+          volumeMounts:
+          - name: tls-secret
+            mountPath: /app/feature_repo/secrets/tls.crt
+            subPath: tls.crt
+            readOnly: true
+      volumes:
+      - name: tls-secret
+        secret:
+          secretName: feast-feast-edb-rec-sys-registry-tls
+          items:
+          - key: tls.crt
+            path: tls.crt
+      serviceAccountName: feast-feast-edb-rec-sys
+  backoffLimit: 4
