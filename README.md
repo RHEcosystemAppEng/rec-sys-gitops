@@ -22,7 +22,6 @@ The pattern harnesses Red Hat OpenShift AI to deploy and serve recommendation at
 * GitOps Deployment: Ensures an end-to-end, reproducible setup of the demo.
 
 ### Workflow
-[Diagram Placeholder: Schematic diagram for workflow of Retail Recommendation System]
 
 The workflow consists of the following steps:
 
@@ -30,54 +29,32 @@ The workflow consists of the following steps:
 * Data originates from parquet files containing users, items, and interactions.
 * Sample datasets are generated and embedded into parquet format.
 * Feast scans feature definitions, validates them, and syncs metadata to its registry.
-2. Feature Definition with Feast
-* Defines data sources, features, views, and services.
-* Initializes EDB PGVector as the offline store for historical data.
-3. Training
-* Retrieves historical features from the offline store using get_historical_features.
-* Trains a Two-Tower model:
-  * User Tower: Encodes user specifics (e.g., interaction history, demographics).
-  * Item Tower: Encodes item specifics (e.g., metadata).
-* Outputs fixed-length embeddings in a shared vector space.
-4. Batch Scoring
+2. Training using the Two-Tower algorithm:
+
+![InGestion and Training](images/Data_ingestion_and_training.drawio.png)
+
+We have two encoders:
+* User Tower: Encodes user features (age, gender, preference, ...) into embedding.
+* Item Tower: Encodes item features (category, price, ...) into embedding.
+  
+For each interaction, positive or negative, train the encoders in such a way that positive interactions bring the item and the user closer in cosine similarity in the embedding space, and negative interactions move the user and the item embeddings farther apart.
+
+3. Batch Scoring & Materialization
+
+![Batch Scoring](images/high_level_batch_scoring.drawio.png)
+
 * Generates embeddings for all users and items using trained encoders.
-* Attaches timestamps and pushes embeddings to the online store (EDB PGVector).
-5. Materialization
 * Computes the latest feature values and precomputes top-k recommendations for each user.
 * Stores results in the online store for fast retrieval.
-6. Serving
-* Existing Users: Fetches precomputed top items from the online store.
-* New Users: Embeds the user in real-time using the user tower model, performs a similarity search against item embeddings in PGVector, and retrieves top-k items.
-* User interactions are logged via Kafka.
-Data Ingestion
-[Diagram Placeholder: Schematic diagram for ingestion of data into Feast]
 
-Raw data (users, items, interactions) from parquet files is ingested into Feast, stored as feature views in the offline store (EDB PGVector).
-
-Training and Batch Scoring
-[Diagram Placeholder: Schematic diagram for training and batch scoring]
-
-The Two-Tower model is trained on historical data, and embeddings are generated and stored in PGVector for later use.
-
-Serving Recommendations
-[Diagram Placeholder: Schematic diagram for serving recommendations]
-
-For existing users, precomputed recommendations are fetched; for new users, embeddings are computed on-the-fly, followed by a similarity search.
-
-Download Diagrams
-View and download all diagrams in our open-source tooling site:
-
-Open Diagrams
-
-Components Deployed
-Model Servers for User and Item Towers: Deployed via OpenShift AI to serve the Two-Tower models for real-time embedding generation.
-Feast Feature Store: Manages feature definitions and serves data for training and inference, using EDB PGVector as the offline store.
-EDB Postgres with PGVector: Acts as both offline (historical data) and online (real-time embeddings) stores.
-Embedding Generation Job: A batch job that generates and populates embeddings into the vector database.
-Recommendation UI: A simple web application for users to interact with recommendations.
-Kafka: Logs user interactions to enable continuous dataset updates.
-Prometheus: Collects metrics from the application and model servers.
-Grafana: Visualizes system performance and recommendation metrics.
+### Components Deployed
+* Feast Feature Store: Manages feature definitions and serves data for training and inference.
+* EDB Postgres with PGVector: Acts as online (real-time embeddings) stores.
+* Embedding Training and Generation Job: A batch job that train the user nad item encoders, then genrate the data generates  embeddings into the vector database.
+* Recommendation UI: A simple web application for users to interact with recommendations.
+* Kafka: Logs user interactions to enable continuous dataset updates.
+<!-- * Prometheus: Collects metrics from the application and model servers. -->
+<!-- * Grafana: Visualizes system performance and recommendation metrics. -->
 ## Deploying the demo
 
 To run the demo, ensure the Podman is running on your machine.Fork the [rag-llm-gitops](https://github.com/validatedpatterns/rag-llm-gitops) repo into your organization

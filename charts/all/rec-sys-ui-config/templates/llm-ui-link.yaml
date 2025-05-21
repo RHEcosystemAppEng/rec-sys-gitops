@@ -2,12 +2,12 @@
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
-  name: rec-sys-link
-  namespace: {{ .Values.recSys.namespace }}
+  name: rec-sys-link3
+  namespace: rec-sys
 spec:
   applicationMenu:
     section: Demo Recommendation System
     # imageURL: 
-  href: 'https://rec-sys-ui-route-{{ .Values.recSys.namespace }}.{{ coalesce .Values.global.localClusterDomain .Values.global.hubClusterDomain }}'
+  href: 'http://rec-sys-ui-route-{{ .Values.recSys.namespace }}.{{ coalesce .Values.global.localClusterDomain .Values.global.hubClusterDomain }}'
   location: ApplicationMenu
   text: 'Recommendation System UI'

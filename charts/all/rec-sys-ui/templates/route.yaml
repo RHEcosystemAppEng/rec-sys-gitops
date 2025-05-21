@@ -6,3 +6,10 @@ spec:
   to:
     kind: Service
     name: rec-sys-ui-service
+    weight: 100
+  port:
+    targetPort: 8080
+    # targetPort: http # This refers to the service port 80
+  # tls:
+  #   insecureEdgeTerminationPolicy: Redirect
+  #   termination: edge
