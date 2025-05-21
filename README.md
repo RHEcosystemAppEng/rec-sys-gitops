@@ -1,6 +1,6 @@
 # Retail Recommendation System Demo
 ## Introduction
-This deployment is based on the validated pattern framework, utilizing GitOps for seamless provisioning of all operators and applications. It deploys a Retail Recommendation System that leverages machine learning models to provide personalized item suggestions to customers, enhancing store sales by considering their preferences and demographics.
+This deployment is based on the validated pattern framework, utilizing GitOps for seamless provisioning of all operators and applications. It deploys a Retail Recommendation System that leverages two-towe algorithm training technich to provide personalized item suggestions to customers, enhancing store sales by considering their preferences and demographics.
 
 The pattern harnesses Red Hat OpenShift AI to deploy and serve recommendation at scale. It integrates the Feast Feature Store for feature management, EDB Postgres to store user and item embeddings, and a simple user interface (UI) to facilitate customer interactions with the system. Running on Red Hat OpenShift, this demo showcases a scalable, enterprise-ready solution for retail recommendations.
 ## Pre-requisites
@@ -12,14 +12,14 @@ The pattern harnesses Red Hat OpenShift AI to deploy and serve recommendation at
 
 ## Demo Description & Architecture
 ### Key Features
-* Red Hat OpenShift AI: Deploys and serves recommendation at scale.
-* Two-Tower Architecture: Utilizes separate neural networks to generate user and item embeddings for personalized recommendations.
+* UI: Allows users to browse recommendations, add items to cart, purchase, or rate products.
 * Feast Feature Store: Manages and serves features for training and real-time inference.
 * EDB Postgres with PGVector: Stores user and item embeddings, enabling fast similarity searches.
-* Simple UI: Allows users to browse recommendations, add items to cart, purchase, or rate products.
 * Kafka Integration: Records user interactions for continuous learning and dataset updates.
-* Monitoring Dashboard: Provides performance metrics using Prometheus and Grafana.
-* GitOps Deployment: Ensures an end-to-end, reproducible setup of the demo.
+* Red Hat OpenShift AI
+* Two-Tower Architecture: Utilizes separate neural networks to generate user and item embeddings for personalized recommendations.
+<!-- * Monitoring Dashboard: Provides performance metrics using Prometheus and Grafana.
+* GitOps Deployment: Ensures an end-to-end, reproducible setup of the demo. -->
 
 ### Workflow
 
@@ -27,9 +27,9 @@ The workflow consists of the following steps:
 
 1. Data Ingestion
 * Data originates from parquet files containing users, items, and interactions.
-* Sample datasets are generated and embedded into parquet format.
 * Feast scans feature definitions, validates them, and syncs metadata to its registry.
-2. Training using the Two-Tower algorithm:
+
+2. Training - using the Two-Tower algorithm:
 
 ![InGestion and Training](images/Data_ingestion_and_training.drawio.png)
 
@@ -48,13 +48,12 @@ For each interaction, positive or negative, train the encoders in such a way tha
 * Stores results in the online store for fast retrieval.
 
 ### Components Deployed
+* Recommendation UI: A simple web application for users to interact with recommendations.
+* Kafka & Kafka connect: ingest user interaction with items from the ui and sent them to Kafka, kafka connect move this intercation events into a EDB database.
 * Feast Feature Store: Manages feature definitions and serves data for training and inference.
 * EDB Postgres with PGVector: Acts as online (real-time embeddings) stores.
-* Embedding Training and Generation Job: A batch job that train the user nad item encoders, then genrate the data generates  embeddings into the vector database.
-* Recommendation UI: A simple web application for users to interact with recommendations.
-* Kafka: Logs user interactions to enable continuous dataset updates.
-<!-- * Prometheus: Collects metrics from the application and model servers. -->
-<!-- * Grafana: Visualizes system performance and recommendation metrics. -->
+* Kubeflow job: A batch job that train the user and item encoders, then genrate the data generates embeddings into the vector database.
+
 ## Deploying the demo
 
 To run the demo, ensure the Podman is running on your machine.Fork the [rag-llm-gitops](https://github.com/validatedpatterns/rag-llm-gitops) repo into your organization
@@ -70,11 +69,11 @@ oc login --token=<token> --server=<api_server_url> # login to Openshift cluster
 ### Cloning repository
 
 ```sh
-git clone https://github.com/<<your-username>>/rag-llm-gitops.git
-cd rag-llm-gitops
+git clone https://github.com/<<your-username>>/rec-sys-gitops.git
+cd rec-sys-gitops
 ```
 
-### Configuring model
+<!-- ### Configuring model
 
 This pattern deploys [IBM Granite 3.1-8B-Instruct](https://huggingface.co/ibm-granite/granite-3.1-8b-instruct) out of box. Run the following command to configure vault with the model Id.
 
@@ -102,9 +101,9 @@ secrets:
     - name: MINIO_ROOT_PASSWORD
       value: null
       onMissingValue: generate
-```
+``` -->
 
-### Provision GPU MachineSet
+<!-- ### Provision GPU MachineSet
 
 As a pre-requisite to deploy the application using the validated pattern, GPU nodes should be provisioned along with Node Feature Discovery Operator and NVIDIA GPU operator. To provision GPU Nodes
 
@@ -118,9 +117,9 @@ Wait till the nodes are provisioned and running.
 
 ![Diagram](images/nodes.png)
 
-Alternatiely, follow the [instructions](./GPU_provisioning.md) to manually install GPU nodes, Node Feature Discovery Operator and NVIDIA GPU operator.
+Alternatiely, follow the [instructions](./GPU_provisioning.md) to manually install GPU nodes, Node Feature Discovery Operator and NVIDIA GPU operator. -->
 
-### Deploy application
+<!-- ### Deploy application
 
 ***Note:**: This pattern supports two types of vector databases, EDB Postgres for Kubernetes and Redis. By default the pattern will deploy EDB Postgres for Kubernetes as a vector DB. To deploy Redis, change the global.db.type to REDIS in [values-global.yaml](./values-global.yaml).
 
@@ -140,11 +139,11 @@ main:
   clusterGroupName: hub
   multiSourceConfig:
     enabled: true
-```
+``` -->
 
 Following commands will take about 15-20 minutes
 
-> **Validated pattern will be deployed**
+### Deploying the pattern
 
 ```sh
 ./pattern.sh make install
@@ -154,12 +153,11 @@ Following commands will take about 15-20 minutes
 
 - Login to the OpenShift web console.
 - Navigate to the Workloads --> Pods.
-- Select the `rag-llm` project from the drop down.
+- Select the `rec-sys` project from the drop down.
 - Following pods should be up and running.
 
-![Pods](images/rag-llm.png)
+![Pods](images/rag-llm.png) # TODO
 
-Note: If the hf-text-generation-server is not running, make sure you have followed the steps to configure a node with GPU from the [instructions](./GPU_provisioning.md) provided above.
 
 ### 2: Launch the application
 

@@ -1,5 +1,5 @@
 apiVersion: v2
-name: rag-llm-ui-config
+name: rec-sys-ui-config
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
