@@ -21,6 +21,13 @@ The pattern harnesses Red Hat OpenShift AI to deploy and serve recommendation at
 <!-- * Monitoring Dashboard: Provides performance metrics using Prometheus and Grafana.
 * GitOps Deployment: Ensures an end-to-end, reproducible setup of the demo. -->
 
+### Serving
+<img src="images/inference.png" alt="Training & Batch scoring" width="80%">
+
+Users can interact with the user interface to view items, add items to their cart, make purchases, or submit reviews.
+
+Each user interaction is sent to a Kafka queue to be saved for training. Since we use a batch recommendation system, the suggested items are already computed during training, and we only need to perform a get operation on the dataset to retrieve the user’s suggestions.
+
 ### Workflow
 
 The workflow consists of the following steps:
@@ -56,7 +63,7 @@ For each interaction, positive or negative, train the encoders in such a way tha
 
 ## Deploying the demo
 
-To run the demo, ensure the Podman is running on your machine.Fork the [rag-llm-gitops](https://github.com/validatedpatterns/rag-llm-gitops) repo into your organization
+To run the demo, ensure the Podman is running on your machine.Fork the [rec-sys-gitops](https://github.com/validatedpatterns/rec-sys-gitops) repo into your organization
 
 ### Login to OpenShift cluster
 
@@ -156,67 +163,18 @@ Following commands will take about 15-20 minutes
 - Select the `rec-sys` project from the drop down.
 - Following pods should be up and running.
 
-![Pods](images/rag-llm.png) # TODO
+<TODO>
 
 
 ### 2: Launch the application
 
-- Click the `Application box` icon in the header, and select `Retrieval-Augmented-Generation (RAG) LLM Demonstration UI`
+<TODO>
 
-![Launch Application](images/launch-application.png)
+### 3: Run the training workflow
+<TODO>
 
-- It should launch the application
-
-  ![Application](images/application.png)
-
-### 3: Generate the proposal document
-
-- It will use the default provider and model configured as part of the application deployment. The default provider is a Hugging Face model server running in the OpenShift. The model server is deployed with this valdiated pattern and requires a node with GPU.
-- Enter any company name
-- Enter the product as `RedHat OpenShift`
-- Click the `Generate` button, a project proposal should be generated. The project proposal also contains the reference of the RAG content. The project proposal document can be Downloaded in the form of a PDF document.
-
-  ![Routes](images/proposal.png)
-
-### 4: Add an OpenAI provider
-
-You can optionally add additional providers. The application supports the following providers
-
-- Hugging Face Text Generation Inference Server
-- OpenAI
-- NVIDIA
-
-Click on the `Add Provider` tab to add a new provider. Fill in the details and click `Add Provider` button. The provider should be added in the `Providers` dropdown uder `Chatbot` tab.
-
-![Routes](images/add_provider.png)
-
-### 5: Generate the proposal document using OpenAI provider
-
-Follow the instructions in step 3 to generate the proposal document using the OpenAI provider.
-
-![Routes](images/chatgpt.png)
-
-### 6: Rating the provider
-
-You can provide rating to the model by clicking on the `Rate the model` radio button. The rating will be captured as part of the metrics and can help the company which model to deploy in prodcution.
-
-### 7: Grafana Dashboard
-
-By default, Grafana application is deployed in `llm-monitoring` namespace.To launch the Grafana Dashboard, follow the instructions below:
-
-- Grab the credentials of Grafana Application
-  - Navigate to Workloads --> Secrets
-  - Click on the grafana-admin-credentials and copy the GF_SECURITY_ADMIN_USER, GF_SECURITY_ADMIN_PASSWORD
-- Launch Grafana Dashboard
-  - Click the `Application box` icon in the header, and select `Grafana UI for LLM ratings`
- ![Launch Application](images/launch-application.png)
-  - Enter the Grafana admin credentials.
-  - Ratings are displayed for each model.
-
-![Routes](images/monitoring.png)
-
-## Test Plan
-GOTO: [Test Plan](./TESTPLAN.md)
+### 4: Use the UI to get recommendations
+<TODO>
 
 ## Licenses
 
