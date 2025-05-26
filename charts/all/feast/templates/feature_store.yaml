@@ -32,7 +32,7 @@ spec:
   feastProjectDir:
     git:
       url: https://github.com/RHEcosystemAppEng/rec-sys-app
-      ref: main
+      ref: validated_pattern
   services:
     offlineStore:
       persistence:
