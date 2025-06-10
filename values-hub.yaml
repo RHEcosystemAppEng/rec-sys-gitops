@@ -43,6 +43,12 @@ clusterGroup:
       name: servicemeshoperator
       namespace: openshift-operators
       channel: stable
+    authorino:
+      name: authorino-operator
+      namespace: openshift-operators
+      channel: stable
+      source: redhat-operators
+      startingCSV: authorino-operator.v1.2.1
     # odh:
     #   name: opendatahub-operator
     #   namespace: openshift-operators

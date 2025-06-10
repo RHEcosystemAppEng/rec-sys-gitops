@@ -13,7 +13,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
           - name: PIPELINE_YAML_RAW_URL
-            value: 'https://raw.githubusercontent.com/RHEcosystemAppEng/rec-sys-workflow/refs/tags/validated-pattern/train-workflow.yaml'
+            value: 'https://raw.githubusercontent.com/RHEcosystemAppEng/rec-sys-workflow/refs/heads/main/train-workflow.yaml'
           - name: PIPELINE_NAME
             value: 'batch_training'
           - name: EXPERIMENT_NAME

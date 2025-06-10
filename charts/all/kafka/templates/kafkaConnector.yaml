@@ -3,20 +3,20 @@ kind: KafkaConnector
 metadata:
   labels:
     strimzi.io/cluster: connect-cluster
-  name: source-connector-negetive-interactions
+  name: source-connector-new-users
   namespace: {{ .Values.kafka.namespace }}
 spec:
   class: io.aiven.connect.jdbc.JdbcSinkConnector
   config:
     value.converter: org.apache.kafka.connect.json.JsonConverter
-    topics: negetive-interactions
+    topics: new-users
     value.converter.schemas.enable: true
     connection.password: "${secrets:rec-sys/cluster-sample-app:password}"
     key.converter: org.apache.kafka.connect.storage.StringConverter
     batch.size: 3
     pk.mode: none
     insert.mode: insert
-    table.name.format: stream_negative_interaction
+    table.name.format: new_users
     connection.user: "${secrets:rec-sys/cluster-sample-app:user}"
     auto.create: true
     auto.evolve: true
@@ -34,20 +34,20 @@ kind: KafkaConnector
 metadata:
   labels:
     strimzi.io/cluster: connect-cluster
-  name: source-connector-positive-interactions
+  name: source-connector-interactions
   namespace: {{ .Values.kafka.namespace }}
 spec:
   class: io.aiven.connect.jdbc.JdbcSinkConnector
   config:
     value.converter: org.apache.kafka.connect.json.JsonConverter
-    topics: positive-interactions
+    topics: interactions
     value.converter.schemas.enable: true
     connection.password: "${secrets:rec-sys/cluster-sample-app:password}"
     key.converter: org.apache.kafka.connect.storage.StringConverter
     batch.size: 3
     pk.mode: none
     insert.mode: insert
-    table.name.format: stream_positive_interaction
+    table.name.format: stream_interaction
     connection.user: "${secrets:rec-sys/cluster-sample-app:user}"
     auto.create: true
     auto.evolve: true

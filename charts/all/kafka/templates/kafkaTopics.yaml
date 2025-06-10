@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: positive-interactions
+  name: interactions
   namespace: {{ .Values.kafka.namespace }}
   labels:
     strimzi.io/cluster: {{ .Values.kafka.cluster.name }}
@@ -15,7 +15,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: negetive-interactions
+  name: new-users
   namespace: {{ .Values.kafka.namespace }}
   labels:
     strimzi.io/cluster: {{ .Values.kafka.cluster.name }}

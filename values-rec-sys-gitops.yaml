@@ -1,0 +1,7 @@
+secrets:
+  - name: hfmodel
+    fields:
+    - name: hftoken
+      value: placeholder
+    - name: modelId
+      value: "ibm-granite/granite-3.1-8b-instruct"

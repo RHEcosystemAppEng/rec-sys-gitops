@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: feast-0
-          image: quay.io/ecosystem-appeng/rec-sys-app:0.0.22
+          image: quay.io/ecosystem-appeng/rec-sys-app:0.0.40
           command:
             - /bin/bash
             - -c
