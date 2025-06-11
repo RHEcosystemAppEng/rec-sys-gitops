@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: feast-apply-job
+  name: feast-apply-jobss
   namespace: rec-sys
   labels:
     feast.dev/name: feast-edb-rec-sys
@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: feast-0
-          image: quay.io/ecosystem-appeng/rec-sys-app:0.0.41
+          image: quay.io/ecosystem-appeng/rec-sys-app:0.0.42
           command:
             - /bin/bash
             - -c
