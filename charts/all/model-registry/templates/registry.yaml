@@ -1,0 +1,26 @@
+apiVersion: modelregistry.opendatahub.io/v1alpha1
+kind: ModelRegistry
+metadata:
+  name: modelregistry-sample
+  namespace: rhoai-model-registries
+  labels:
+    app.kubernetes.io/created-by: model-registry-operator
+    app.kubernetes.io/instance: modelregistry-sample
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: modelregistry
+    app.kubernetes.io/part-of: model-registry-operator
+spec:
+  grpc:
+    port: 9090
+  mysql:
+    database: model_registry
+    host: model-registry-db
+    passwordSecret:
+      key: database-password
+      name: model-registry-db
+    port: 3306
+    # skipDBCreation: false
+    username: mlmduser
+  rest:
+    port: 8080
+    serviceRoute: disabled
